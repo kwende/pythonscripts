@@ -37,8 +37,13 @@ if browser is not None:
 	password = browser.find_element_by_id('Password')
 	loginForm = browser.find_element_by_id('frmSignIn')
 
+	fin = open('../supersaverpassword.txt', 'r')
+	clearTextPassword = fin.read().replace('\n','')
+	fin.close()
+
+	#print('Logging in with password "' + clearTextPassword + '"')
 	emailAddress.send_keys('ben@ben-rush.net')
-	password.send_keys('###')
+	password.send_keys(clearTextPassword)
 
 	loginForm.submit()
 	
