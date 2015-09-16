@@ -31,6 +31,7 @@ def HandlePage(toInsert, browser, link):
 		toInsert.append([title, save, description, expires, link, int(idOfCouponItem)])
 
 if browser is not None: 
+
 	browser.get('https://secure3.mywebgrocer.com/UMA/RegisterSignIn.aspx?uc=AEEAF106')
 
 	emailAddress = browser.find_element_by_id('EmailAddressSignIn')
@@ -53,7 +54,10 @@ if browser is not None:
 	mainPageLink = 'http://super-saver.mywebgrocer.com/Coupons.aspx'
 
 	# get the main coupon page. load the links to the other coupon pages. 
+	print('getting main page.')
 	browser.get(mainPageLink)
+	print('done getting main page.')
+
 	allCouponLinkElements = browser.find_elements_by_xpath(\
 		"//div[@class='coupons-pages ui-corner-all']/*[1]/a[@class='coupons-nav']")
 	for couponLink in allCouponLinkElements:
@@ -68,7 +72,7 @@ if browser is not None:
 		# load
 		browser.get(couponLink)
 		# handle
-		HandlePage(toInsert, browser, mainPageLink)
+		HandlePage(toInsert, browser, couponLink)
 	
 	# write to the database		
 	cursor.executemany('insert into coupon values (?,?,?,?,?,?)', toInsert)
