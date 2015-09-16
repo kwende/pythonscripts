@@ -38,7 +38,12 @@ if browser is not None:
 		cursor.execute('select link from coupon where id = ' + str(idToSelect))
 		result = cursor.fetchone()
 
-		print('Need to navigate to page ' + result[0])
+		browser.get(result[0]); 
+
+		aLinkToClick = browser.find_element_by_xpath("//a[@id='Button_" + str(idToSelect) + "']")
+
+		print('preparing to click link with text ' + aLinkToClick.text)
+		aLinkToClick.click()
 
 		print(str(idToSelect)) 
 
